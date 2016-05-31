@@ -1,0 +1,30 @@
+
+When you are using ansible galaxy role https://github.com/geerlingguy/ansible-role-mysql
+and want to use one user for several databases:
+
+```
+mysql_databases:
+  - name: "{{ some_db1 }}"
+    encoding: "{{ some_encoding }}"
+    collation: "{{ some_collation }}"
+    
+  - name: "{{ some_db2 }}"
+    encoding: "{{ some_encoding }}"
+    collation: "{{ some_collation }}"  
+
+mysql_users:
+  - name: "{{ some_user }}"
+    host: '%'
+    password: "{{ some_pass }}"
+    priv: "{{ some_db1 }}.*:ALL"
+  
+  - name: "{{ some_user }}"
+    host: '%'
+    password: "{{ some_pass }}"
+    priv: "{{ some_db2 }}.*:ALL"
+    append_privs: yes
+    
+```
+In the end user "some_user" has "access" to both dbs
+
+``append_privs`` with value "yes" modifies behavour, so permission are't overwritten, but appended.
