@@ -28,3 +28,26 @@ mysql_users:
 In the end user "some_user" has "access" to both dbs
 
 ``append_privs`` with value "yes" modifies behavour, so permission are't overwritten, but appended.
+
+More consise way just to set all permissions in one string:
+
+```
+mysql_databases:
+  - name: "{{ some_db1 }}"
+    encoding: "{{ some_encoding }}"
+    collation: "{{ some_collation }}"
+    
+  - name: "{{ some_db2 }}"
+    encoding: "{{ some_encoding }}"
+    collation: "{{ some_collation }}"  
+
+mysql_users:
+  - name: "{{ some_user }}"
+    host: '%'
+    password: "{{ some_pass }}"
+    priv: "{{ some_db1 }}.*:ALL
+          /{{ some_db2 }}.*:ALL"
+```
+So, no need to duplicate user blocks. :)
+
+More info: http://docs.ansible.com/ansible/mysql_user_module.html
