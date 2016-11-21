@@ -16,4 +16,8 @@ at your host
 scp your_account_at_server@8.8.8.8:result_of_query.csv ~/Downloads/result_of_query.csv
 ```
 
+Git revert after merging
+```
+ git revert -m 1 HEAD
+```
 
